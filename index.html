@@ -6,7 +6,6 @@
     <title>Ganna Amr Emad | AI & Data Engineer</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* === LIGHT MODE (Luxurious Beige) === */
         :root {
             --bg-primary: #FAF8F5;
             --bg-secondary: #F2EDE8;
@@ -22,7 +21,6 @@
             --shadow-hover: 0 20px 50px rgba(92, 74, 61, 0.15);
         }
 
-        /* === DARK MODE (Luxurious Dark) === */
         [data-theme="dark"] {
             --bg-primary: #0F0E0D;
             --bg-secondary: #1A1816;
@@ -50,7 +48,6 @@
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        /* Animated Background Gradient */
         body::before {
             content: '';
             position: fixed;
@@ -64,12 +61,8 @@
             pointer-events: none;
         }
 
-        @keyframes rotateBg {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes rotateBg { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -117,7 +110,6 @@
         }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
-        /* Theme Toggle Button */
         .theme-toggle {
             background: var(--glass);
             border: 1px solid var(--glass-border);
@@ -138,7 +130,6 @@
             transform: rotate(15deg);
         }
 
-        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -237,7 +228,6 @@
             transform: translateY(-4px);
         }
 
-        /* Sections General */
         section { padding: 8rem 5%; }
         .section-header { text-align: center; margin-bottom: 5rem; }
         .section-header h2 {
@@ -249,7 +239,6 @@
         .section-header h2 span { color: var(--accent); }
         .section-header p { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
 
-        /* Impact Stats Section */
         .stats-section {
             background: var(--bg-secondary);
             border-top: 1px solid var(--glass-border);
@@ -272,7 +261,6 @@
         }
         .stat-item p { color: var(--text-secondary); font-size: 1rem; font-weight: 500; }
 
-        /* About Section */
         .about-grid {
             max-width: 1100px;
             margin: 0 auto;
@@ -294,7 +282,6 @@
         .about-text h3 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 1.5rem; }
         .about-text p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 1.05rem; }
 
-        /* Skills Section */
         .skills-grid {
             max-width: 1200px;
             margin: 0 auto;
@@ -329,7 +316,6 @@
             border: 1px solid var(--glass-border);
         }
 
-        /* Portfolio Section */
         .portfolio-grid {
             max-width: 1200px;
             margin: 0 auto;
@@ -393,7 +379,6 @@
         }
         .portfolio-link:hover { gap: 0.8rem; }
 
-        /* Contact Section */
         .contact { background: var(--bg-secondary); border-top: 1px solid var(--glass-border); }
         .contact-grid {
             max-width: 900px;
@@ -414,7 +399,6 @@
         }
         .contact-item:hover { border-color: var(--accent); transform: translateY(-5px); }
         
-        /* FIX: Prevent email from overflowing the box */
         .contact-item a { 
             color: var(--text-primary); 
             text-decoration: none; 
@@ -449,17 +433,15 @@
 
         footer { background: var(--bg-primary); color: var(--text-secondary); text-align: center; padding: 2rem; font-size: 0.9rem; border-top: 1px solid var(--glass-border); }
 
-        /* Scroll Animations */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.8rem; }
-            .nav-links { display: none; } /* Can add hamburger menu later if needed */
+            .nav-links { display: none; }
             .about-grid { grid-template-columns: 1fr; gap: 2rem; }
             .portfolio-grid { grid-template-columns: 1fr; }
             .cta-group { flex-direction: column; align-items: center; }
@@ -478,9 +460,7 @@
             <li><a href="#portfolio">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
             <li>
-                <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">
-                    🌙
-                </button>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">🌙</button>
             </li>
         </ul>
     </nav>
@@ -489,9 +469,7 @@
         <div class="hero-content">
             <div class="hero-badge">Artificial Intelligence & Bioinformatics</div>
             <h1>Building Intelligent <br><span>Data-Driven</span> Solutions</h1>
-            <div class="typing-text">
-                I am an <span id="typing"></span><span class="cursor">|</span>
-            </div>
+            <div class="typing-text">I am an <span id="typing"></span><span class="cursor">|</span></div>
             <div class="cta-group">
                 <a href="#portfolio" class="btn btn-primary">View My Work ↓</a>
                 <a href="https://github.com/GANNAAMR66" target="_blank" class="btn btn-secondary">
@@ -502,25 +480,12 @@
         </div>
     </section>
 
-    <!-- Impact Stats Section -->
     <section class="stats-section reveal">
         <div class="stats-grid">
-            <div class="stat-item">
-                <h3>3.88</h3>
-                <p>Outstanding GPA</p>
-            </div>
-            <div class="stat-item">
-                <h3>9+</h3>
-                <p>End-to-End Projects</p>
-            </div>
-            <div class="stat-item">
-                <h3>98%</h3>
-                <p>OMR Grading Accuracy</p>
-            </div>
-            <div class="stat-item">
-                <h3>DEPI</h3>
-                <p>Certified Data Engineer</p>
-            </div>
+            <div class="stat-item"><h3>3.88</h3><p>Outstanding GPA</p></div>
+            <div class="stat-item"><h3>10+</h3><p>End-to-End Projects</p></div>
+            <div class="stat-item"><h3>98%</h3><p>OMR Grading Accuracy</p></div>
+            <div class="stat-item"><h3>DEPI</h3><p>Certified Data Engineer</p></div>
         </div>
     </section>
 
@@ -531,7 +496,6 @@
         </div>
         <div class="about-grid">
             <div class="about-image reveal">
-                <!-- تم تحديث اسم الصورة إلى جنة.jpg مع إضافة fallback احتياطي -->
                 <img src="جنة.jpg" alt="Ganna Amr Emad" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--accent);font-size:5rem;font-family:Playfair Display;\'>GA</div>'">
             </div>
             <div class="about-text reveal">
@@ -554,7 +518,7 @@
                 <h3>Programming</h3>
                 <p>Core languages for software development and algorithmic problem solving.</p>
                 <div class="skill-tags">
-                    <span class="skill-tag">Python</span><span class="skill-tag">C++</span><span class="skill-tag">SQL</span><span class="skill-tag">OOP</span>
+                    <span class="skill-tag">Python</span><span class="skill-tag">C++</span><span class="skill-tag">SQL</span><span class="skill-tag">Dart</span><span class="skill-tag">OOP</span>
                 </div>
             </div>
             <div class="skill-card reveal">
@@ -562,15 +526,15 @@
                 <h3>AI & Machine Learning</h3>
                 <p>Building predictive models and extracting insights from complex datasets.</p>
                 <div class="skill-tags">
-                    <span class="skill-tag">Scikit-learn</span><span class="skill-tag">XGBoost</span><span class="skill-tag">Pandas</span><span class="skill-tag">Feature Eng.</span>
+                    <span class="skill-tag">Scikit-learn</span><span class="skill-tag">XGBoost</span><span class="skill-tag">Pandas</span><span class="skill-tag">Gemini AI</span>
                 </div>
             </div>
             <div class="skill-card reveal">
-                <div class="skill-icon">👁️</div>
-                <h3>Computer Vision</h3>
-                <p>Real-time image processing, object detection, and visual data analysis.</p>
+                <div class="skill-icon">📱</div>
+                <h3>Mobile & Web Dev</h3>
+                <p>Cross-platform applications and responsive web interfaces.</p>
                 <div class="skill-tags">
-                    <span class="skill-tag">OpenCV</span><span class="skill-tag">MediaPipe</span><span class="skill-tag">OMR</span><span class="skill-tag">Image Proc.</span>
+                    <span class="skill-tag">Flutter</span><span class="skill-tag">HTML5/CSS3</span><span class="skill-tag">JavaScript</span><span class="skill-tag">Clean Arch.</span>
                 </div>
             </div>
             <div class="skill-card reveal">
@@ -587,11 +551,28 @@
     <section class="portfolio" id="portfolio">
         <div class="section-header reveal">
             <h2>Featured <span>Projects</span></h2>
-            <p>A comprehensive selection of my recent work in AI, Data, and Robotics.</p>
+            <p>A comprehensive selection of my recent work in AI, Data, and Software Engineering.</p>
         </div>
         <div class="portfolio-grid">
             
-            <!-- Project 1 -->
+            <!-- Project 1: Popular People App (NEW & TOP TIER) -->
+            <div class="portfolio-card reveal">
+                <div class="portfolio-image">
+                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Popular People App" onerror="this.style.display='none'">
+                </div>
+                <div class="portfolio-content">
+                    <h3>Popular People App</h3>
+                    <p>A modern cross-platform mobile app built with Clean Architecture and BLoC. Features TMDB API integration, local favorites persistence, and a smart Google Gemini AI assistant.</p>
+                    <div class="portfolio-tech">
+                        <span class="tech-badge">Flutter</span><span class="tech-badge">Dart</span><span class="tech-badge">BLoC</span><span class="tech-badge">Gemini AI</span>
+                    </div>
+                    <div class="portfolio-links">
+                        <a href="https://github.com/GANNAAMR66/popular-people-flutter" target="_blank" class="portfolio-link">View Code →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
             <div class="portfolio-card reveal">
                 <div class="portfolio-image">
                     <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="Vitalix" onerror="this.style.display='none'">
@@ -608,7 +589,7 @@
                 </div>
             </div>
 
-            <!-- Project 2 -->
+            <!-- Project 3 -->
             <div class="portfolio-card reveal">
                 <div class="portfolio-image">
                     <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&h=400&fit=crop" alt="IMDb" onerror="this.style.display='none'">
@@ -625,7 +606,7 @@
                 </div>
             </div>
 
-            <!-- Project 3 -->
+            <!-- Project 4 -->
             <div class="portfolio-card reveal">
                 <div class="portfolio-image">
                     <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop" alt="OMR" onerror="this.style.display='none'">
@@ -642,7 +623,7 @@
                 </div>
             </div>
 
-            <!-- Project 4: Temperature Prediction (Added with correct link) -->
+            <!-- Project 5 -->
             <div class="portfolio-card reveal">
                 <div class="portfolio-image">
                     <img src="https://images.unsplash.com/photo-1592210454359-9043f067919b?w=600&h=400&fit=crop" alt="Temperature" onerror="this.style.display='none'">
@@ -659,7 +640,7 @@
                 </div>
             </div>
 
-            <!-- Project 5 -->
+            <!-- Project 6 -->
             <div class="portfolio-card reveal">
                 <div class="portfolio-image">
                     <img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?w=600&h=400&fit=crop" alt="Count Fingers" onerror="this.style.display='none'">
@@ -676,7 +657,7 @@
                 </div>
             </div>
 
-            <!-- Project 6 -->
+            <!-- Project 7 -->
             <div class="portfolio-card reveal">
                 <div class="portfolio-image">
                     <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=400&fit=crop" alt="Camera Streaming" onerror="this.style.display='none'">
@@ -693,7 +674,7 @@
                 </div>
             </div>
 
-            <!-- Project 7 -->
+            <!-- Project 8 -->
             <div class="portfolio-card reveal">
                 <div class="portfolio-image">
                     <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=400&fit=crop" alt="Robot" onerror="this.style.display='none'">
@@ -706,23 +687,6 @@
                     </div>
                     <div class="portfolio-links">
                         <a href="https://github.com/GANNAAMR66/Arduino-Based-Line-Follower-Robot" target="_blank" class="portfolio-link">View Code →</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 8 -->
-            <div class="portfolio-card reveal">
-                <div class="portfolio-image">
-                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop" alt="Safe Box" onerror="this.style.display='none'">
-                </div>
-                <div class="portfolio-content">
-                    <h3>Digital Safe Box</h3>
-                    <p>Designed and implemented a secure digital lock system using AND, XOR, and NOT logic gates, applying Boolean logic for switch-based authentication.</p>
-                    <div class="portfolio-tech">
-                        <span class="tech-badge">Logic Gates</span><span class="tech-badge">Digital Design</span><span class="tech-badge">Hardware</span>
-                    </div>
-                    <div class="portfolio-links">
-                        <a href="https://github.com/GANNAAMR66/Digital-Safe-Box-using-Logic-Gates" target="_blank" class="portfolio-link">View Code →</a>
                     </div>
                 </div>
             </div>
@@ -740,7 +704,6 @@
             <div class="contact-item">
                 <div class="contact-icon">📧</div>
                 <p>Email Me</p>
-                <!-- تم إصلاح مشكلة خروج الإيميل عن المربع -->
                 <a href="mailto:ganna662006@gmail.com">ganna662006@gmail.com</a>
             </div>
             <div class="contact-item">
@@ -773,25 +736,20 @@
     </footer>
 
     <script>
-        // === 1. Theme Toggle Logic (Light/Dark Mode) ===
         const themeToggle = document.getElementById('themeToggle');
         const currentTheme = localStorage.getItem('theme') || 'light';
-        
-        // Apply saved theme on load
         document.documentElement.setAttribute('data-theme', currentTheme);
         themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
 
         themeToggle.addEventListener('click', () => {
             let theme = document.documentElement.getAttribute('data-theme');
             let newTheme = theme === 'dark' ? 'light' : 'dark';
-            
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
         });
 
-        // === 2. Typing Effect ===
-        const words = ["AI Engineer.", "Data Enthusiast.", "Computer Vision Developer.", "Bioinformatics Student."];
+        const words = ["AI Engineer.", "Data Enthusiast.", "Mobile App Developer.", "Bioinformatics Student."];
         let i = 0;
         let timer;
 
@@ -805,7 +763,7 @@
                 timer = setTimeout(typeWriter, 100);
             } else if (!this.isDeleting && currentText === word) {
                 this.isDeleting = true;
-                timer = setTimeout(typeWriter, 2000); // Pause at end
+                timer = setTimeout(typeWriter, 2000);
             } else if (this.isDeleting && currentText !== "") {
                 heading.innerText = word.substring(0, currentText.length - 1);
                 timer = setTimeout(typeWriter, 50);
@@ -817,7 +775,6 @@
         }
         typeWriter();
 
-        // === 3. Scroll Reveal Animation ===
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -829,7 +786,6 @@
 
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // === 4. Active Nav Link on Scroll ===
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-links a:not(.theme-toggle)');
         
