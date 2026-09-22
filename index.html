@@ -1,489 +1,1054 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ganna Amr Emad - AI & Data Engineering Student. Portfolio showcasing projects in Machine Learning, Computer Vision, and Data Pipelines.">
-    <title>Ganna Amr Emad | AI & Data Engineer</title>
+    <meta name="description" content="Ganna Amr Emad - AI & Data Engineering Student. Building intelligent systems and data pipelines.">
+    <title>Ganna Amr Emad — AI & Data Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
-            --bg-main: #09090b;
-            --bg-card: #121214;
-            --bg-card-hover: #18181b;
-            --border: #27272a;
-            --text-primary: #f4f4f5;
-            --text-secondary: #a1a1aa;
-            --accent: #f59e0b; /* Amber/Gold for premium feel */
-            --accent-glow: rgba(245, 158, 11, 0.15);
-            --success: #10b981;
-            --font-body: 'Inter', sans-serif;
-            --font-heading: 'Space Grotesk', sans-serif;
+            --bg: #0a0a0a;
+            --bg-secondary: #111111;
+            --text: #ffffff;
+            --text-muted: #888888;
+            --accent: #ff3e00;
+            --accent-glow: rgba(255, 62, 0, 0.3);
+            --border: #222222;
+            --card-bg: #151515;
         }
 
-        [data-theme="light"] {
-            --bg-main: #fafafa;
-            --bg-card: #ffffff;
-            --bg-card-hover: #f4f4f5;
-            --border: #e4e4e7;
-            --text-primary: #18181b;
-            --text-secondary: #52525b;
-            --accent: #d97706;
-            --accent-glow: rgba(217, 119, 6, 0.1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: var(--font-body);
-            background-color: var(--bg-main);
-            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s;
             overflow-x: hidden;
         }
 
+        /* Noise Texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.15s ease, background 0.15s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            background: var(--accent);
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10001;
+        }
+
         /* Typography */
-        h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; letter-spacing: -0.02em; }
-        a { text-decoration: none; color: inherit; }
-        
-        /* Layout */
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-        section { padding: 6rem 0; }
+        h1, h2, h3, h4 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
         /* Navigation */
         nav {
-            position: fixed; top: 0; width: 100%; z-index: 100;
-            background: rgba(9, 9, 11, 0.8); backdrop-filter: blur(12px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
         }
-        [data-theme="light"] nav { background: rgba(250, 250, 250, 0.8); }
-        
-        .nav-inner {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 2rem; max-width: 1100px; margin: 0 auto;
-        }
-        .logo { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); }
-        .logo span { color: var(--accent); }
-        
-        .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
-        .nav-links a { font-size: 0.9rem; color: var(--text-secondary); transition: color 0.2s; }
-        .nav-links a:hover { color: var(--text-primary); }
-        
-        .btn-download {
-            background: var(--text-primary); color: var(--bg-main);
-            padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 500; font-size: 0.85rem;
-            transition: opacity 0.2s;
-        }
-        .btn-download:hover { opacity: 0.8; }
 
-        .theme-toggle {
-            background: none; border: 1px solid var(--border); color: var(--text-primary);
-            width: 36px; height: 36px; border-radius: 6px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .btn-download {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .btn-download:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--accent-glow);
         }
 
         /* Hero Section */
-        .hero { min-height: 90vh; display: flex; align-items: center; padding-top: 8rem; }
-        .hero-content { max-width: 800px; }
-        .hero-badge {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.4rem 1rem; background: var(--accent-glow); color: var(--accent);
-            border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 1.5rem;
-            border: 1px solid rgba(245, 158, 11, 0.2);
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 4rem 4rem;
+            position: relative;
         }
-        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; }
-        .hero h1 span { color: var(--accent); }
-        .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin-bottom: 2.5rem; }
-        
-        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 62, 0, 0.1);
+            border: 1px solid rgba(255, 62, 0, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        .hero-label::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 0.95;
+            margin-bottom: 2rem;
+            font-weight: 800;
+        }
+
+        .hero h1 .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero h1 .line span {
+            display: inline-block;
+            transform: translateY(100%);
+        }
+
+        .hero h1 .highlight {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 5rem;
+        }
+
         .btn-primary {
-            background: var(--accent); color: #000; padding: 0.8rem 1.8rem;
-            border-radius: 8px; font-weight: 600; transition: transform 0.2s;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .btn-primary:hover { transform: translateY(-2px); }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px var(--accent-glow);
+        }
+
         .btn-secondary {
-            background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary);
-            padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 500; transition: border-color 0.2s;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
-        .btn-secondary:hover { border-color: var(--accent); }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
 
         /* Stats */
-        .stats-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border);
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
         }
-        .stat-item h3 { font-size: 2rem; color: var(--accent); margin-bottom: 0.2rem; }
-        .stat-item p { font-size: 0.85rem; color: var(--text-secondary); }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
 
         /* Section Headers */
-        .section-header { margin-bottom: 3rem; }
-        .section-header h2 { font-size: 2rem; margin-bottom: 0.5rem; }
-        .section-header p { color: var(--text-secondary); }
+        section {
+            padding: 8rem 4rem;
+        }
 
-        /* Project Cards (Flagship) */
-        .projects-grid { display: grid; gap: 2rem; }
+        .section-header {
+            margin-bottom: 5rem;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
         .project-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 12px; overflow: hidden; transition: all 0.3s ease;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
-        .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-        
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 62, 0, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card.featured {
+            grid-column: span 2;
+        }
+
         .project-visual {
-            background: linear-gradient(135deg, var(--bg-card-hover), var(--bg-main));
-            display: flex; align-items: center; justify-content: center;
-            padding: 3rem; position: relative; overflow: hidden;
-            min-height: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--card-bg) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
-        /* CSS Mockups for immediate premium look */
-        .mockup-icon { font-size: 5rem; opacity: 0.8; }
-        .mockup-frame {
-            background: var(--bg-main); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1rem; width: 80%; max-width: 250px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        .mockup-line { height: 8px; background: var(--border); border-radius: 4px; margin-bottom: 8px; }
-        .mockup-line.short { width: 60%; }
 
-        .project-content { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
-        .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .project-visual::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .project-card:hover .project-visual::after {
+            opacity: 1;
+        }
+
+        .project-icon {
+            font-size: 5rem;
+            z-index: 1;
+            transition: transform 0.5s;
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .project-content {
+            padding: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
         .tag {
-            font-size: 0.75rem; padding: 0.2rem 0.6rem; background: var(--bg-main);
-            border: 1px solid var(--border); border-radius: 4px; color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 62, 0, 0.1);
+            border: 1px solid rgba(255, 62, 0, 0.2);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 500;
         }
-        .project-content h3 { font-size: 1.5rem; margin-bottom: 1rem; }
-        .project-content p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
-        
+
+        .project-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .project-content p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
         .project-meta {
-            display: flex; gap: 1.5rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-secondary);
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
         }
-        .meta-item { display: flex; align-items: center; gap: 0.4rem; }
-        .meta-item strong { color: var(--text-primary); }
 
-        .project-links { display: flex; gap: 1rem; margin-top: auto; }
-        .link-btn {
-            font-size: 0.85rem; font-weight: 500; color: var(--accent);
-            display: flex; align-items: center; gap: 0.4rem; transition: gap 0.2s;
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
         }
-        .link-btn:hover { gap: 0.6rem; }
 
-        /* Supporting Projects Grid */
-        .supporting-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;
+        .meta-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
-        .supporting-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 10px; padding: 1.5rem; transition: border-color 0.2s;
-        }
-        .supporting-card:hover { border-color: var(--accent); }
-        .supporting-card h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .supporting-card p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
 
-        /* Archive List */
-        .archive-list {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;
+        .meta-value {
+            font-weight: 600;
+            color: var(--text);
         }
-        .archive-item {
-            padding: 1rem; background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 8px; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center;
+
+        .project-links {
+            display: flex;
+            gap: 1.5rem;
         }
-        .archive-item a { color: var(--text-secondary); font-size: 0.8rem; }
-        .archive-item a:hover { color: var(--accent); }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: gap 0.3s;
+        }
+
+        .project-link:hover {
+            gap: 0.8rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .skill-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .skill-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 2rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
 
         /* Footer */
         footer {
-            border-top: 1px solid var(--border); padding: 3rem 0; text-align: center;
-            color: var(--text-secondary); font-size: 0.9rem;
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
-        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
-        .social-links a { font-size: 1.2rem; transition: color 0.2s; }
-        .social-links a:hover { color: var(--accent); }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; } /* Simplified for mobile */
-            .project-card { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.2rem; }
-            .container { padding: 0 1.5rem; }
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero, section {
+                padding: 6rem 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card.featured {
+                grid-column: span 1;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
 
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Navigation -->
     <nav>
-        <div class="nav-inner">
-            <a href="#" class="logo">Ganna<span>.</span></a>
-            <ul class="nav-links">
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <!-- Replace 'cv.pdf' with your actual CV file name -->
-                <li><a href="cv.pdf" target="_blank" class="btn-download">Download CV</a></li>
-                <li><button class="theme-toggle" id="themeToggle">☀️</button></li>
-            </ul>
-        </div>
+        <a href="#" class="logo">Ganna<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="cv.pdf" class="btn-download">Download CV</a></li>
+        </ul>
     </nav>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span></span> Seeking AI & Data Engineering Internships
-                </div>
-                <h1>Building intelligent systems, <span>data pipelines</span>, and computer vision solutions.</h1>
-                <p>I'm Ganna Amr, a 3rd-year AI student (GPA 3.88) specializing in Bioinformatics. I engineer end-to-end machine learning models, scalable data workflows, and cross-platform applications.</p>
-                <div class="hero-actions">
-                    <a href="#projects" class="btn-primary">View Projects</a>
-                    <a href="https://github.com/GANNAAMR66" target="_blank" class="btn-secondary">GitHub Profile</a>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <h3>3.88</h3>
-                        <p>University GPA</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>6</h3>
-                        <p>Team Members Led (OMR)</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>10+</h3>
-                        <p>End-to-End Projects</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>DEPI</h3>
-                        <p>Data Eng. Certified</p>
-                    </div>
-                </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-label">
+                Seeking AI & Data Engineering Internships
             </div>
-        </section>
+            <h1>
+                <div class="line"><span>Building</span></div>
+                <div class="line"><span class="highlight">intelligent</span></div>
+                <div class="line"><span>systems.</span></div>
+            </h1>
+            <p class="hero-description">
+                I'm Ganna Amr, a 3rd-year AI student (GPA 3.88) specializing in Bioinformatics. 
+                I engineer end-to-end machine learning models, scalable data pipelines, and 
+                computer vision solutions that solve real-world problems.
+            </p>
+            <div class="hero-actions">
+                <a href="#projects" class="btn-primary">
+                    View Projects
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/GANNAAMR66" target="_blank" class="btn-secondary">
+                    GitHub Profile
+                </a>
+            </div>
 
-        <!-- Flagship Projects -->
-        <section id="projects" class="container">
-            <div class="section-header">
-                <h2>Flagship Projects</h2>
-                <p>Deep dives into my most complex technical work.</p>
-            </div>
-            
-            <div class="projects-grid">
-                <!-- Project 1: Popular People App -->
-                <div class="project-card">
-                    <div class="project-visual">
-                        <div class="mockup-frame">
-                            <div class="mockup-line"></div>
-                            <div class="mockup-line short"></div>
-                            <div style="margin-top: 20px; font-size: 2rem; text-align: center;"></div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag">Flutter</span><span class="tag">Clean Architecture</span><span class="tag">BLoC</span><span class="tag">Gemini AI</span>
-                        </div>
-                        <h3>Popular People App</h3>
-                        <p>A cross-platform mobile app fetching TMDB data. Features a robust state management system and an integrated Google Gemini AI assistant for natural language queries about celebrities.</p>
-                        <div class="project-meta">
-                            <div class="meta-item"><strong>Role:</strong> Solo Developer</div>
-                            <div class="meta-item"><strong>Year:</strong> 2026</div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/GANNAAMR66/popular-people-flutter" target="_blank" class="link-btn">View Code →</a>
-                        </div>
-                    </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">3.88</div>
+                    <div class="stat-label">University GPA</div>
                 </div>
-
-                <!-- Project 2: OMR System -->
-                <div class="project-card">
-                    <div class="project-visual">
-                        <div class="mockup-frame" style="transform: rotate(-2deg);">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                                <div class="mockup-line" style="width: 40%;"></div>
-                                <div class="mockup-line" style="width: 20%;"></div>
-                            </div>
-                            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 15px;">
-                                <div style="width: 15px; height: 15px; border-radius: 50%; border: 1px solid var(--border);"></div>
-                                <div style="width: 15px; height: 15px; border-radius: 50%; background: var(--accent);"></div>
-                                <div style="width: 15px; height: 15px; border-radius: 50%; border: 1px solid var(--border);"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Computer Vision</span><span class="tag">Team Lead</span>
-                        </div>
-                        <h3>OMR Auto Grading System</h3>
-                        <p>Led a 6-member university team to build an automated grading system. Implemented perspective transformation and contour detection to accurately grade rotated/skewed answer sheets and export Excel reports.</p>
-                        <div class="project-meta">
-                            <div class="meta-item"><strong>Role:</strong> Team Lead (6 members)</div>
-                            <div class="meta-item"><strong>Year:</strong> 2026</div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/GANNAAMR66/Core_vision" target="_blank" class="link-btn">View Code →</a>
-                        </div>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">End-to-End Projects</div>
                 </div>
-
-                <!-- Project 3: IMDb -->
-                <div class="project-card">
-                    <div class="project-visual">
-                        <div class="mockup-frame" style="width: 90%;">
-                            <div style="display: flex; gap: 5px; margin-bottom: 10px;">
-                                <div style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></div>
-                                <div style="width: 10px; height: 10px; border-radius: 50%; background: #eab308;"></div>
-                                <div style="width: 10px; height: 10px; border-radius: 50%; background: #22c55e;"></div>
-                            </div>
-                            <div class="mockup-line"></div>
-                            <div class="mockup-line short"></div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Scikit-learn</span><span class="tag">Streamlit</span>
-                        </div>
-                        <h3>IMDb Recommendation Engine</h3>
-                        <p>Built an end-to-end data pipeline for 1000+ movies. Engineered a content-based recommendation system using TF-IDF and Cosine Similarity. Deployed as an interactive web app.</p>
-                        <div class="project-meta">
-                            <div class="meta-item"><strong>Role:</strong> Data Engineer</div>
-                            <div class="meta-item"><strong>Year:</strong> 2026</div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/GANNAAMR66/IMDb-Movie-Analytics" target="_blank" class="link-btn">View Code →</a>
-                            <a href="https://imdb-movie-analytics-hvr4hyoakhwappqsbxxocgq.streamlit.app" target="_blank" class="link-btn">Live Demo ↗</a>
-                        </div>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Team Members Led</div>
                 </div>
-
-                <!-- Project 4: Vitalix -->
-                <div class="project-card">
-                    <div class="project-visual">
-                        <div class="mockup-frame">
-                            <div style="text-align: center; font-size: 1.5rem; margin-bottom: 10px;">🔥</div>
-                            <div class="mockup-line"></div>
-                            <div class="mockup-line short" style="background: var(--accent);"></div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag">Python</span><span class="tag">XGBoost</span><span class="tag">Tkinter</span><span class="tag">ML</span>
-                        </div>
-                        <h3>Vitalix: Calories Predictor</h3>
-                        <p>Developed an AI desktop app predicting calories burned using XGBoost regression. Handled full ML lifecycle: preprocessing, training, evaluation, and built an interactive GUI for real-time inference.</p>
-                        <div class="project-meta">
-                            <div class="meta-item"><strong>Role:</strong> ML Engineer</div>
-                            <div class="meta-item"><strong>Year:</strong> 2026</div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/GANNAAMR66/Vitalix-Calories-Predictor" target="_blank" class="link-btn">View Code →</a>
-                        </div>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number">DEPI</div>
+                    <div class="stat-label">Data Eng. Certified</div>
                 </div>
             </div>
-        </section>
-
-        <!-- Supporting Projects -->
-        <section class="container" style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-            <div class="section-header">
-                <h2>Supporting Projects</h2>
-                <p>Additional work in Computer Vision and Networking.</p>
-            </div>
-            <div class="supporting-grid">
-                <div class="supporting-card">
-                    <h4>Count Fingers (OpenCV)</h4>
-                    <p>Real-time hand tracking and finger counting using MediaPipe and convexity defects analysis.</p>
-                    <a href="https://github.com/GANNAAMR66/Count-Fingers-Using-OpenCV" target="_blank" class="link-btn">View Code →</a>
-                </div>
-                <div class="supporting-card">
-                    <h4>Mobile Camera Streaming</h4>
-                    <p>Low-latency video streaming from mobile to laptop over Wi-Fi using Python sockets and OpenCV.</p>
-                    <a href="https://github.com/GANNAAMR66/Mobile-Camera-Streaming-to-Laptop-using-OpenCV" target="_blank" class="link-btn">View Code →</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Archive / Other Projects -->
-        <section class="container">
-            <div class="section-header">
-                <h2>Other Projects</h2>
-                <p>Earlier work in robotics, web dev, and hardware.</p>
-            </div>
-            <div class="archive-list">
-                <div class="archive-item">
-                    <span>Line Follower Robot (Arduino)</span>
-                    <a href="https://github.com/GANNAAMR66/Arduino-Based-Line-Follower-Robot" target="_blank">GitHub </a>
-                </div>
-                <div class="archive-item">
-                    <span>Temperature Prediction (Python)</span>
-                    <a href="https://github.com/GANNAAMR66/-Temperature-Predictor-24h-Cairo-Approx.-Arduino-Based" target="_blank">GitHub ↗</a>
-                </div>
-                <div class="archive-item">
-                    <span>Digital Safe Box (Logic Gates)</span>
-                    <a href="https://github.com/GANNAAMR66/Digital-Safe-Box-using-Logic-Gates" target="_blank">GitHub ↗</a>
-                </div>
-                <div class="archive-item">
-                    <span>ilya Hoodies (E-commerce)</span>
-                    <a href="https://github.com/GANNAAMR66/ilya--hoodies" target="_blank">GitHub ↗</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills & Certifications -->
-        <section id="skills" class="container">
-            <div class="section-header">
-                <h2>Technical Arsenal</h2>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-                <div>
-                    <h4 style="margin-bottom: 1rem; color: var(--accent);">Languages & Core</h4>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Python, C++, SQL, Dart, JavaScript, OOP, Data Structures</p>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 1rem; color: var(--accent);">AI & Data Engineering</h4>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Machine Learning, XGBoost, Pandas, Scikit-learn, Data Pipelines, Azure, EDA, TF-IDF</p>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 1rem; color: var(--accent);">Computer Vision & Mobile</h4>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">OpenCV, MediaPipe, Flutter, Clean Architecture, BLoC, Tkinter</p>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 1rem; color: var(--accent);">Certifications</h4>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">DEPI (Data Eng.), IEEE Machine Learning, Smart Technology Robotics</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer id="contact">
-        <div class="container">
-            <div class="social-links">
-                <a href="https://github.com/GANNAAMR66" target="_blank">GitHub</a>
-                <a href="https://www.linkedin.com/in/ganna-amr-emad-" target="_blank">LinkedIn</a>
-                <a href="mailto:ganna662006@gmail.com">Email</a>
-            </div>
-            <p>© 2026 Ganna Amr Emad. Built with precision.</p>
         </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="section-header reveal">
+            <div class="section-label">Featured Work</div>
+            <h2 class="section-title">Projects that<br>define my craft.</h2>
+            <p class="section-subtitle">
+                Deep dives into my most complex technical work across AI, Data Engineering, and Computer Vision.
+            </p>
+        </div>
+
+        <div class="projects-grid">
+            <!-- Project 1: Popular People App (Featured) -->
+            <div class="project-card featured reveal">
+                <div class="project-visual">
+                    <div class="project-icon">📱</div>
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">Flutter</span>
+                        <span class="tag">Clean Architecture</span>
+                        <span class="tag">BLoC</span>
+                        <span class="tag">Gemini AI</span>
+                    </div>
+                    <h3>Popular People App</h3>
+                    <p>
+                        A cross-platform mobile application featuring TMDB API integration, 
+                        robust state management with BLoC/Cubit patterns, and an integrated 
+                        Google Gemini AI assistant for natural language queries about celebrities.
+                    </p>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Role</div>
+                            <div class="meta-value">Solo Developer</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Year</div>
+                            <div class="meta-value">2026</div>
+                        </div>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/GANNAAMR66/popular-people-flutter" target="_blank" class="project-link">
+                            View Code →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: OMR System -->
+            <div class="project-card reveal">
+                <div class="project-visual">
+                    <div class="project-icon"></div>
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">Computer Vision</span>
+                        <span class="tag">Team Lead</span>
+                    </div>
+                    <h3>OMR Auto Grading</h3>
+                    <p>
+                        Led a 6-member team to build an automated grading system using 
+                        perspective transformation and contour detection.
+                    </p>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Role</div>
+                            <div class="meta-value">Team Lead</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Team</div>
+                            <div class="meta-value">6 Members</div>
+                        </div>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/GANNAAMR66/Core_vision" target="_blank" class="project-link">
+                            View Code →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: IMDb -->
+            <div class="project-card reveal">
+                <div class="project-visual">
+                    <div class="project-icon">🎬</div>
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">Scikit-learn</span>
+                        <span class="tag">Streamlit</span>
+                    </div>
+                    <h3>IMDb Recommendations</h3>
+                    <p>
+                        End-to-end data pipeline with TF-IDF and Cosine Similarity. 
+                        Deployed as interactive web app.
+                    </p>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Role</div>
+                            <div class="meta-value">Data Engineer</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Status</div>
+                            <div class="meta-value">Live Demo</div>
+                        </div>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/GANNAAMR66/IMDb-Movie-Analytics" target="_blank" class="project-link">
+                            View Code →
+                        </a>
+                        <a href="https://imdb-movie-analytics-hvr4hyoakhwappqsbxxocgq.streamlit.app" target="_blank" class="project-link">
+                            Live Demo ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: Vitalix -->
+            <div class="project-card reveal">
+                <div class="project-visual">
+                    <div class="project-icon">🔥</div>
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">XGBoost</span>
+                        <span class="tag">Tkinter</span>
+                        <span class="tag">ML</span>
+                    </div>
+                    <h3>Vitalix: Calories AI</h3>
+                    <p>
+                        AI desktop app predicting calories burned using XGBoost regression 
+                        with real-time GUI inference.
+                    </p>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Role</div>
+                            <div class="meta-value">ML Engineer</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Year</div>
+                            <div class="meta-value">2026</div>
+                        </div>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/GANNAAMR66/Vitalix-Calories-Predictor" target="_blank" class="project-link">
+                            View Code →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5: Count Fingers -->
+            <div class="project-card reveal">
+                <div class="project-visual">
+                    <div class="project-icon">🖐️</div>
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">MediaPipe</span>
+                        <span class="tag">Python</span>
+                    </div>
+                    <h3>Count Fingers</h3>
+                    <p>
+                        Real-time hand tracking and finger counting using convexity defects analysis.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/GANNAAMR66/Count-Fingers-Using-OpenCV" target="_blank" class="project-link">
+                            View Code →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6: Camera Streaming -->
+            <div class="project-card reveal">
+                <div class="project-visual">
+                    <div class="project-icon">📹</div>
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">Sockets</span>
+                        <span class="tag">Python</span>
+                    </div>
+                    <h3>Camera Streaming</h3>
+                    <p>
+                        Low-latency video streaming from mobile to laptop over Wi-Fi.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/GANNAAMR66/Mobile-Camera-Streaming-to-Laptop-using-OpenCV" target="_blank" class="project-link">
+                            View Code →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="section-header reveal">
+            <div class="section-label">Technical Arsenal</div>
+            <h2 class="section-title">Tools &<br>Technologies.</h2>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-card reveal">
+                <h4>Languages & Core</h4>
+                <p>Python, C++, SQL, Dart, JavaScript, OOP, Data Structures & Algorithms</p>
+            </div>
+            <div class="skill-card reveal">
+                <h4>AI & Machine Learning</h4>
+                <p>Scikit-learn, XGBoost, Pandas, NumPy, Feature Engineering, Model Evaluation, TF-IDF</p>
+            </div>
+            <div class="skill-card reveal">
+                <h4>Data Engineering</h4>
+                <p>Data Pipelines, Big Data Processing, Azure, EDA, Statistical Analysis, Database Management</p>
+            </div>
+            <div class="skill-card reveal">
+                <h4>Computer Vision</h4>
+                <p>OpenCV, MediaPipe, Image Processing, Contour Detection, Perspective Transformation, OMR</p>
+            </div>
+            <div class="skill-card reveal">
+                <h4>Mobile & Web</h4>
+                <p>Flutter, Clean Architecture, BLoC, HTML5, CSS3, JavaScript, Responsive Design</p>
+            </div>
+            <div class="skill-card reveal">
+                <h4>Certifications</h4>
+                <p>DEPI (Data Engineering), IEEE Machine Learning, Smart Technology Robotics, IEEE Database</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-content reveal">
+            <div class="section-label">Get In Touch</div>
+            <h2>Let's build<br>something great.</h2>
+            <p class="section-subtitle" style="margin: 0 auto;">
+                Open to internships, training programs, and junior opportunities in AI, Data Engineering, and Software Development.
+            </p>
+
+            <div class="contact-links">
+                <a href="mailto:ganna662006@gmail.com" class="contact-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    ganna662006@gmail.com
+                </a>
+                <a href="https://github.com/GANNAAMR66" target="_blank" class="contact-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/ganna-amr-emad-" target="_blank" class="contact-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Ganna Amr Emad. Crafted with precision and passion.</p>
     </footer>
 
     <script>
-        // Theme Toggle
-        const toggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
-        
-        toggle.addEventListener('click', () => {
-            const current = html.getAttribute('data-theme');
-            const next = current === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-theme', next);
-            toggle.textContent = next === 'light' ? '🌙' : '☀️';
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+            cursorDot.style.left = e.clientX - 2 + 'px';
+            cursorDot.style.top = e.clientY - 2 + 'px';
         });
 
-        // Smooth Scroll for Nav Links
+        document.querySelectorAll('a, button, .project-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Scroll Reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        reveals.forEach(el => revealObserver.observe(el));
+
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Text Reveal
+        gsap.from('.hero h1 .line span', {
+            y: 100,
+            duration: 1,
+            stagger: 0.2,
+            ease: 'power4.out',
+            delay: 0.5
+        });
+
+        gsap.from('.hero-description', {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            delay: 1.5
+        });
+
+        gsap.from('.hero-actions', {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            delay: 1.8
+        });
+
+        gsap.from('.stat-item', {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            stagger: 0.1,
+            delay: 2
+        });
+
+        // Project Cards Animation
+        gsap.utils.toArray('.project-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.1
             });
         });
     </script>
