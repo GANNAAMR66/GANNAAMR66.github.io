@@ -41,7 +41,6 @@
             overflow-x: hidden;
         }
 
-        /* Noise Texture */
         body::before {
             content: '';
             position: fixed;
@@ -54,7 +53,6 @@
             z-index: 9999;
         }
 
-        /* Custom Cursor */
         .cursor {
             width: 20px;
             height: 20px;
@@ -82,7 +80,6 @@
             z-index: 10001;
         }
 
-        /* Typography */
         h1, h2, h3, h4 {
             font-family: 'Syne', sans-serif;
             font-weight: 700;
@@ -94,7 +91,6 @@
             color: inherit;
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -168,7 +164,7 @@
             box-shadow: 0 0 30px var(--accent-glow);
         }
 
-        /* Hero Section */
+        /* Hero Section with Profile Photo */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -181,6 +177,16 @@
             max-width: 1400px;
             margin: 0 auto;
             width: 100%;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
 
         .hero-label {
@@ -193,7 +199,7 @@
             border-radius: 50px;
             font-size: 0.85rem;
             color: var(--accent);
-            margin-bottom: 2rem;
+            width: fit-content;
         }
 
         .hero-label::before {
@@ -213,7 +219,6 @@
         .hero h1 {
             font-size: clamp(3rem, 8vw, 7rem);
             line-height: 0.95;
-            margin-bottom: 2rem;
             font-weight: 800;
         }
 
@@ -235,15 +240,12 @@
         .hero-description {
             font-size: 1.3rem;
             color: var(--text-muted);
-            max-width: 600px;
-            margin-bottom: 3rem;
             line-height: 1.7;
         }
 
         .hero-actions {
             display: flex;
             gap: 1.5rem;
-            margin-bottom: 5rem;
         }
 
         .btn-primary {
@@ -280,6 +282,62 @@
             color: var(--accent);
         }
 
+        /* Profile Photo */
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-photo {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            position: relative;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--card-bg) 100%);
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .profile-photo:hover img {
+            transform: scale(1.05);
+        }
+
+        .profile-photo::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--accent) 0%, transparent 50%, var(--accent) 100%);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .profile-photo::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: -20px;
+            bottom: -20px;
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
         /* Stats */
         .stats {
             display: grid;
@@ -287,6 +345,7 @@
             gap: 3rem;
             padding-top: 3rem;
             border-top: 1px solid var(--border);
+            margin-top: 2rem;
         }
 
         .stat-item {
@@ -308,7 +367,6 @@
             color: var(--text-muted);
         }
 
-        /* Section Headers */
         section {
             padding: 8rem 4rem;
         }
@@ -337,7 +395,7 @@
             max-width: 600px;
         }
 
-        /* Projects Grid */
+        /* Projects Grid with Real Images */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -363,6 +421,7 @@
             background: linear-gradient(135deg, transparent 0%, rgba(255, 62, 0, 0.05) 100%);
             opacity: 0;
             transition: opacity 0.5s;
+            z-index: 1;
         }
 
         .project-card:hover {
@@ -381,45 +440,35 @@
 
         .project-visual {
             height: 300px;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--card-bg) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
+        }
+
+        .project-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .project-card:hover .project-visual img {
+            transform: scale(1.1);
         }
 
         .project-visual::after {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .project-card:hover .project-visual::after {
-            opacity: 1;
-        }
-
-        .project-icon {
-            font-size: 5rem;
-            z-index: 1;
-            transition: transform 0.5s;
-        }
-
-        .project-card:hover .project-icon {
-            transform: scale(1.2) rotate(5deg);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, var(--card-bg) 0%, transparent 100%);
         }
 
         .project-content {
             padding: 2.5rem;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         .project-tags {
@@ -570,7 +619,6 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        /* Footer */
         footer {
             padding: 3rem 4rem;
             text-align: center;
@@ -593,6 +641,19 @@
                 padding: 6rem 2rem;
             }
 
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .profile-photo {
+                max-width: 250px;
+            }
+
             .projects-grid {
                 grid-template-columns: 1fr;
             }
@@ -610,7 +671,6 @@
             }
         }
 
-        /* Scroll Reveal */
         .reveal {
             opacity: 0;
             transform: translateY(50px);
@@ -625,11 +685,9 @@
 </head>
 <body>
 
-    <!-- Custom Cursor -->
     <div class="cursor"></div>
     <div class="cursor-dot"></div>
 
-    <!-- Navigation -->
     <nav>
         <a href="#" class="logo">Ganna<span>.</span></a>
         <ul class="nav-links">
@@ -640,56 +698,63 @@
         </ul>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-label">
-                Seeking AI & Data Engineering Internships
-            </div>
-            <h1>
-                <div class="line"><span>Building</span></div>
-                <div class="line"><span class="highlight">intelligent</span></div>
-                <div class="line"><span>systems.</span></div>
-            </h1>
-            <p class="hero-description">
-                I'm Ganna Amr, a 3rd-year AI student (GPA 3.88) specializing in Bioinformatics. 
-                I engineer end-to-end machine learning models, scalable data pipelines, and 
-                computer vision solutions that solve real-world problems.
-            </p>
-            <div class="hero-actions">
-                <a href="#projects" class="btn-primary">
-                    View Projects
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                    </svg>
-                </a>
-                <a href="https://github.com/GANNAAMR66" target="_blank" class="btn-secondary">
-                    GitHub Profile
-                </a>
+            <div class="hero-text">
+                <div class="hero-label">
+                    Seeking AI & Data Engineering Internships
+                </div>
+                <h1>
+                    <div class="line"><span>Building</span></div>
+                    <div class="line"><span class="highlight">intelligent</span></div>
+                    <div class="line"><span>systems.</span></div>
+                </h1>
+                <p class="hero-description">
+                    I'm Ganna Amr, a 3rd-year AI student (GPA 3.88) specializing in Bioinformatics. 
+                    I engineer end-to-end machine learning models, scalable data pipelines, and 
+                    computer vision solutions that solve real-world problems.
+                </p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn-primary">
+                        View Projects
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/GANNAAMR66" target="_blank" class="btn-secondary">
+                        GitHub Profile
+                    </a>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">3.88</div>
+                        <div class="stat-label">University GPA</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">End-to-End Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Team Members Led</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">DEPI</div>
+                        <div class="stat-label">Data Eng. Certified</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number">3.88</div>
-                    <div class="stat-label">University GPA</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">End-to-End Projects</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">6</div>
-                    <div class="stat-label">Team Members Led</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">DEPI</div>
-                    <div class="stat-label">Data Eng. Certified</div>
+            <div class="hero-image">
+                <div class="profile-photo">
+                    <!-- استبدلي 'ganna.jpg' باسم صورتك الحقيقية -->
+                    <img src="ganna.jpg" alt="Ganna Amr Emad" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop'">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
     <section id="projects">
         <div class="section-header reveal">
             <div class="section-label">Featured Work</div>
@@ -703,7 +768,7 @@
             <!-- Project 1: Popular People App (Featured) -->
             <div class="project-card featured reveal">
                 <div class="project-visual">
-                    <div class="project-icon">📱</div>
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&h=600&fit=crop" alt="Popular People App">
                 </div>
                 <div class="project-content">
                     <div class="project-tags">
@@ -739,7 +804,7 @@
             <!-- Project 2: OMR System -->
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <div class="project-icon"></div>
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=600&fit=crop" alt="OMR Auto Grading">
                 </div>
                 <div class="project-content">
                     <div class="project-tags">
@@ -774,7 +839,7 @@
             <!-- Project 3: IMDb -->
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <div class="project-icon">🎬</div>
+                    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&h=600&fit=crop" alt="IMDb Recommendations">
                 </div>
                 <div class="project-content">
                     <div class="project-tags">
@@ -812,7 +877,7 @@
             <!-- Project 4: Vitalix -->
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <div class="project-icon">🔥</div>
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop" alt="Vitalix Calories">
                 </div>
                 <div class="project-content">
                     <div class="project-tags">
@@ -847,7 +912,7 @@
             <!-- Project 5: Count Fingers -->
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <div class="project-icon">🖐️</div>
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop" alt="Count Fingers">
                 </div>
                 <div class="project-content">
                     <div class="project-tags">
@@ -870,7 +935,7 @@
             <!-- Project 6: Camera Streaming -->
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <div class="project-icon">📹</div>
+                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&h=600&fit=crop" alt="Camera Streaming">
                 </div>
                 <div class="project-content">
                     <div class="project-tags">
@@ -892,7 +957,6 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
     <section id="skills">
         <div class="section-header reveal">
             <div class="section-label">Technical Arsenal</div>
@@ -927,7 +991,6 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="contact-content reveal">
             <div class="section-label">Get In Touch</div>
@@ -960,13 +1023,11 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <p>© 2026 Ganna Amr Emad. Crafted with precision and passion.</p>
     </footer>
 
     <script>
-        // Custom Cursor
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
 
@@ -982,7 +1043,6 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
 
-        // Scroll Reveal
         const reveals = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -994,7 +1054,6 @@
 
         reveals.forEach(el => revealObserver.observe(el));
 
-        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1004,10 +1063,8 @@
             });
         });
 
-        // GSAP Animations
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero Text Reveal
         gsap.from('.hero h1 .line span', {
             y: 100,
             duration: 1,
@@ -1038,7 +1095,14 @@
             delay: 2
         });
 
-        // Project Cards Animation
+        gsap.from('.profile-photo', {
+            opacity: 0,
+            scale: 0.8,
+            duration: 1.2,
+            delay: 1,
+            ease: 'power3.out'
+        });
+
         gsap.utils.toArray('.project-card').forEach((card, i) => {
             gsap.from(card, {
                 scrollTrigger: {
